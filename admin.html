@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="GG Admin">
+  <meta name="theme-color" content="#FFD43B">
+  <title>Garage Guard — My Dashboard 🏠</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+
+    :root {
+      --yellow: #FFD43B;
+      --yellow-dark: #F59F00;
+      --blue: #228BE6;
+      --blue-light: #E7F5FF;
+      --green: #40C057;
+      --green-light: #EBFBEE;
+      --red: #FA5252;
+      --red-light: #FFF5F5;
+      --orange: #FD7E14;
+      --orange-light: #FFF4E6;
+      --purple: #845EF7;
+      --purple-light: #F3F0FF;
+      --bg: #FFFBF0;
+      --white: #FFFFFF;
+      --text: #1A1A1A;
+      --muted: #666;
+      --border: #E9ECEF;
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    /* LOGIN */
+    .login-screen {
+      min-height: 100vh;
+      background: var(--yellow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .login-title { font-size: 36px; font-weight: 900; margin-bottom: 4px; }
+    .login-sub { font-size: 15px; font-weight: 700; color: #555; margin-bottom: 28px; }
+    .login-card {
+      background: white;
+      border-radius: var(--radius);
+      border: 3px solid var(--yellow-dark);
+      box-shadow: 4px 4px 0 var(--yellow-dark);
+      padding: 28px 22px;
+      width: 100%;
+      max-width: 360px;
+    }
+    .login-card label { display: block; font-size: 14px; font-weight: 800; margin-bottom: 6px; text-align: left; }
+    .login-card input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2.5px solid var(--border);
+      border-radius: 12px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      outline: none;
+      -webkit-appearance: none;
+    }
+    .login-card input:focus { border-color: var(--blue); }
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--blue);
+      color: white;
+      border: 3px solid #1971C2;
+      box-shadow: 3px 3px 0 #1971C2;
+      border-radius: var(--radius);
+      font-family: 'Nunito', sans-serif;
+      font-size: 17px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+    .login-btn:active { box-shadow: none; transform: translate(3px,3px); }
+    .login-error { display: none; color: var(--red); font-size: 13px; font-weight: 700; margin-top: 10px; }
+
+    /* APP */
+    .app { display: none; }
+
+    .topbar {
+      background: var(--yellow);
+      border-bottom: 4px solid var(--yellow-dark);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .topbar-title { font-size: 20px; font-weight: 900; }
+    .logout-btn {
+      font-family: 'Nunito', sans-serif;
+      font-size: 13px; font-weight: 700;
+      background: none; border: none;
+      color: #555; cursor: pointer;
+    }
+
+    .tabs {
+      display: flex;
+      background: white;
+      border-bottom: 3px solid var(--border);
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 12px 4px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 13px; font-weight: 800;
+      border: none; background: transparent;
+      color: var(--muted); cursor: pointer;
+      border-bottom: 4px solid transparent;
+      transition: all 0.15s;
+    }
+    .tab-btn.active { color: var(--blue); border-bottom-color: var(--blue); }
+
+    .tab-content { display: none; padding: 16px; }
+    .tab-content.active { display: block; }
+
+    /* STATS */
+    .stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 18px; }
+    .stat-box {
+      background: white;
+      border: 2.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 8px;
+      text-align: center;
+    }
+    .stat-num { font-size: 28px; font-weight: 900; color: var(--blue); }
+    .stat-label { font-size: 11px; font-weight: 700; color: var(--muted); margin-top: 2px; }
+
+    /* JOB CARDS */
+    .job-card {
+      background: white;
+      border: 2.5px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+    .job-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 14px 0;
+    }
+    .job-name { font-size: 17px; font-weight: 900; }
+    .badge {
+      font-size: 12px; font-weight: 800;
+      padding: 5px 12px; border-radius: 30px;
+    }
+    .badge.pending { background: var(--orange-light); color: var(--orange); }
+    .badge.accepted { background: var(--green-light); color: #2F9E44; }
+    .badge.done { background: var(--border); color: var(--muted); }
+    .badge.declined { background: var(--red-light); color: var(--red); }
+    .job-body { padding: 10px 14px 14px; }
+    .job-row { font-size: 13px; font-weight: 700; color: var(--muted); margin-bottom: 5px; }
+    .job-row strong { color: var(--text); }
+
+    .storage-pill {
+      display: inline-block;
+      font-size: 12px; font-weight: 800;
+      padding: 4px 12px; border-radius: 30px;
+      margin: 6px 0 4px;
+    }
+    .storage-pill.garage { background: var(--purple-light); color: var(--purple); }
+    .storage-pill.ours { background: var(--orange-light); color: var(--orange); }
+    .access-info { font-size: 12px; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
+
+    /* FIRST TIME TOGGLE */
+    .first-time-toggle {
+      display: flex; align-items: center; gap: 8px;
+      margin: 10px 0 6px;
+      cursor: pointer; user-select: none;
+    }
+    .first-time-toggle input { display: none; }
+    .toggle-box {
+      width: 22px; height: 22px;
+      border-radius: 6px;
+      border: 2.5px solid var(--border);
+      background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: 13px;
+      transition: all 0.15s;
+    }
+    .first-time-toggle input:checked + .toggle-box {
+      background: var(--green);
+      border-color: #2F9E44;
+      color: white;
+    }
+    .toggle-label { font-size: 13px; font-weight: 800; color: var(--text); }
+    .toggle-discount { color: #2F9E44; }
+
+    /* ACTION BUTTONS */
+    .job-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+    .btn {
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 13px; font-weight: 800;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.1s;
+    }
+    .btn:active { transform: scale(0.96); }
+    .btn-accept { background: var(--green); color: white; border-color: #2F9E44; }
+    .btn-decline { background: var(--red-light); color: var(--red); border-color: #FFC9C9; }
+    .btn-photo { background: var(--blue); color: white; border-color: #1971C2; }
+    .btn-done { background: var(--border); color: var(--text); border-color: #CED4DA; }
+
+    /* PACKAGES */
+    .pkg-card {
+      background: white;
+      border: 2.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+    .pkg-name { font-size: 15px; font-weight: 900; margin-bottom: 4px; }
+    .pkg-meta { font-size: 12px; font-weight: 700; color: var(--muted); margin-bottom: 8px; }
+    .pkg-photo { width: 100%; border-radius: 10px; margin-top: 8px; max-height: 240px; object-fit: cover; border: 2px solid var(--border); }
+
+    /* EARNINGS */
+    .earnings-hero {
+      background: var(--green);
+      border: 3px solid #2F9E44;
+      border-radius: var(--radius);
+      box-shadow: 4px 4px 0 #2F9E44;
+      padding: 24px;
+      text-align: center;
+      color: white;
+      margin-bottom: 18px;
+    }
+    .earnings-label { font-size: 14px; font-weight: 800; opacity: 0.85; margin-bottom: 4px; }
+    .earnings-amount { font-size: 52px; font-weight: 900; }
+    .earn-row {
+      background: white;
+      border: 2.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .earn-name { font-size: 14px; font-weight: 800; }
+    .earn-dates { font-size: 12px; font-weight: 700; color: var(--muted); margin-top: 2px; }
+    .earn-amt { font-size: 18px; font-weight: 900; color: var(--green); }
+    .first-time-badge {
+      display: inline-block;
+      background: var(--green-light);
+      color: #2F9E44;
+      font-size: 11px; font-weight: 800;
+      padding: 2px 8px; border-radius: 10px;
+      margin-left: 4px;
+    }
+
+    /* EMPTY STATE */
+    .empty {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .empty-icon { font-size: 48px; display: block; margin-bottom: 12px; }
+
+    input[type="file"] { display: none; }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-screen" id="login-screen">
+  <div class="login-title">🏠 Garage Guard</div>
+  <div class="login-sub">My secret dashboard 🔒</div>
+  <div class="login-card">
+    <label>🔑 Password</label>
+    <input type="password" id="pw-input" placeholder="Enter your password" onkeydown="if(event.key==='Enter') login()">
+    <button class="login-btn" onclick="login()">🚀 Let me in!</button>
+    <div class="login-error" id="login-error">❌ Wrong password! Try again.</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div class="app" id="app">
+  <div class="topbar">
+    <span class="topbar-title">🏠 My Dashboard</span>
+    <button class="logout-btn" onclick="logout()">Sign out 👋</button>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('jobs')">📋 Jobs</button>
+    <button class="tab-btn" onclick="showTab('packages')">📦 Packages</button>
+    <button class="tab-btn" onclick="showTab('earnings')">💰 Earnings</button>
+  </div>
+
+  <!-- JOBS -->
+  <div class="tab-content active" id="tab-jobs">
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-num" id="stat-pending">0</div>
+        <div class="stat-label">⏳ Pending</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="stat-active">0</div>
+        <div class="stat-label">✅ Active</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="stat-pkgs">0</div>
+        <div class="stat-label">📦 Packages</div>
+      </div>
+    </div>
+    <div id="jobs-list"></div>
+  </div>
+
+  <!-- PACKAGES -->
+  <div class="tab-content" id="tab-packages">
+    <div id="packages-list"></div>
+  </div>
+
+  <!-- EARNINGS -->
+  <div class="tab-content" id="tab-earnings">
+    <div class="earnings-hero">
+      <div class="earnings-label">💰 Total money earned!</div>
+      <div class="earnings-amount" id="total-earned">$0</div>
+    </div>
+    <div id="earnings-list"></div>
+  </div>
+</div>
+
+<input type="file" id="photo-input" accept="image/*" capture="environment">
+
+<script>
+  const ADMIN_PASSWORD = 'garageguard2025';
+
+  function login() {
+    if (document.getElementById('pw-input').value === ADMIN_PASSWORD) {
+      sessionStorage.setItem('gg_admin', '1');
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      renderAll();
+    } else {
+      document.getElementById('login-error').style.display = 'block';
+    }
+  }
+  function logout() { sessionStorage.removeItem('gg_admin'); location.reload(); }
+  if (sessionStorage.getItem('gg_admin')) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+  }
+
+  const getBookings = () => JSON.parse(localStorage.getItem('gg_bookings') || '[]');
+  const saveBookings = b => localStorage.setItem('gg_bookings', JSON.stringify(b));
+
+  function formatDate(d) {
+    if (!d) return '';
+    const [y,m,day] = d.split('-');
+    return `${m}/${day}/${y}`;
+  }
+  function daysBetween(s,e) {
+    return Math.max(1, Math.round((new Date(e) - new Date(s)) / 86400000));
+  }
+
+  function renderAll() { renderJobs(); renderPackages(); renderEarnings(); updateStats(); }
+
+  function updateStats() {
+    const b = getBookings();
+    document.getElementById('stat-pending').textContent = b.filter(x=>x.status==='pending').length;
+    document.getElementById('stat-active').textContent = b.filter(x=>x.status==='accepted').length;
+    document.getElementById('stat-pkgs').textContent = b.reduce((s,x)=>s+(x.packages||[]).length,0);
+  }
+
+  function renderJobs() {
+    const b = getBookings();
+    const el = document.getElementById('jobs-list');
+    if (!b.length) {
+      el.innerHTML = '<div class="empty"><span class="empty-icon">📭</span>No bookings yet!<br>Share your link with neighbors! 😊</div>';
+      return;
+    }
+    const order = {pending:0, accepted:1, done:2, declined:3};
+    b.sort((a,z) => (order[a.status]||0) - (order[z.status]||0));
+
+    el.innerHTML = b.map(bk => {
+      const days = daysBetween(bk.startDate, bk.endDate);
+      const isFirstTime = bk.firstTime || false;
+      const earned = (days * 5) - (isFirstTime ? 5 : 0);
+
+      const statusLabel = {pending:'⏳ Pending', accepted:'✅ Active', done:'🏁 Done', declined:'✕ Declined'}[bk.status] || bk.status;
+
+      let storageInfo = '';
+      if (bk.storageType === 'garage') {
+        const accessDetail = bk.accessType === 'remote'
+          ? `📱 Remote open at ${bk.remoteTime || '—'} · Call ${bk.remoteContact || '—'}`
+          : `🔢 Keypad code: ${bk.garageCode || '—'}`;
+        storageInfo = `<div><span class="storage-pill garage">🏠 Customer's garage</span></div><div class="access-info">${accessDetail}</div>`;
+      } else if (bk.storageType === 'ourgarage') {
+        storageInfo = `<div><span class="storage-pill ours">📦 We hold &amp; deliver</span></div>`;
+      }
+
+      let actions = '';
+      if (bk.status === 'pending') {
+        actions = `<button class="btn btn-accept" onclick="acceptJob(${bk.id})">✅ Accept</button>
+                   <button class="btn btn-decline" onclick="declineJob(${bk.id})">✕ Decline</button>`;
+      } else if (bk.status === 'accepted') {
+        actions = `<button class="btn btn-photo" onclick="addPackage(${bk.id})">📸 Log package</button>
+                   <button class="btn btn-done" onclick="markDone(${bk.id})">🏁 Mark done</button>`;
+      }
+
+      return `<div class="job-card">
+        <div class="job-header">
+          <span class="job-name">${bk.name}</span>
+          <span class="badge ${bk.status}">${statusLabel}</span>
+        </div>
+        <div class="job-body">
+          <div class="job-row">🏘️ <strong>${bk.community || '—'}</strong></div>
+          <div class="job-row">📍 <strong>${bk.address}</strong></div>
+          <div class="job-row">📞 <strong>${bk.phone}</strong></div>
+          <div class="job-row">📅 ${formatDate(bk.startDate)} → ${formatDate(bk.endDate)} · <strong>${days} days · $${earned}</strong></div>
+          ${storageInfo}
+          ${bk.notes ? `<div class="job-row">📝 ${bk.notes}</div>` : ''}
+          <div class="job-row">📦 ${(bk.packages||[]).length} package(s) logged</div>
+          <label class="first-time-toggle">
+            <input type="checkbox" ${isFirstTime ? 'checked' : ''} onchange="toggleFirstTime(${bk.id}, this.checked)">
+            <div class="toggle-box">${isFirstTime ? '✓' : ''}</div>
+            <span class="toggle-label">🎉 First-time customer <span class="toggle-discount">(–$5 discount!)</span></span>
+          </label>
+          <div class="job-actions">${actions}</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function acceptJob(id) {
+    const b = getBookings(); const bk = b.find(x=>x.id===id);
+    if (bk) { bk.status='accepted'; saveBookings(b); renderAll(); }
+  }
+  function declineJob(id) {
+    if (!confirm('Decline this booking?')) return;
+    const b = getBookings(); const bk = b.find(x=>x.id===id);
+    if (bk) { bk.status='declined'; saveBookings(b); renderAll(); }
+  }
+  function markDone(id) {
+    const b = getBookings(); const bk = b.find(x=>x.id===id);
+    if (bk) { bk.status='done'; saveBookings(b); renderAll(); }
+  }
+  function toggleFirstTime(id, checked) {
+    const b = getBookings(); const bk = b.find(x=>x.id===id);
+    if (bk) { bk.firstTime=checked; saveBookings(b); renderAll(); }
+  }
+
+  let currentBookingId = null;
+  function addPackage(id) { currentBookingId = id; document.getElementById('photo-input').click(); }
+
+  document.getElementById('photo-input').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file || !currentBookingId) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const b = getBookings(); const bk = b.find(x=>x.id===currentBookingId);
+      if (bk) {
+        if (!bk.packages) bk.packages = [];
+        bk.packages.push({ photo: ev.target.result, addedAt: new Date().toISOString(), label: `Package ${bk.packages.length+1}` });
+        saveBookings(b); renderAll(); showTab('packages');
+      }
+    };
+    reader.readAsDataURL(file);
+    this.value = '';
+  });
+
+  function renderPackages() {
+    const b = getBookings();
+    const all = [];
+    b.forEach(bk => (bk.packages||[]).forEach(pkg => all.push({...pkg, customerName: bk.name})));
+    const el = document.getElementById('packages-list');
+    if (!all.length) {
+      el.innerHTML = '<div class="empty"><span class="empty-icon">📦</span>No packages yet!<br>Accept a job and tap "Log package" to add photos! 📸</div>';
+      return;
+    }
+    el.innerHTML = all.reverse().map(pkg => `
+      <div class="pkg-card">
+        <div class="pkg-name">${pkg.label}</div>
+        <div class="pkg-meta">👤 ${pkg.customerName} · 🕐 ${new Date(pkg.addedAt).toLocaleDateString()}</div>
+        ${pkg.photo ? `<img src="${pkg.photo}" class="pkg-photo" alt="Package photo">` : ''}
+      </div>`).join('');
+  }
+
+  function renderEarnings() {
+    const b = getBookings();
+    const accepted = b.filter(x => x.status==='accepted'||x.status==='done');
+    let total = 0;
+    const rows = accepted.map(bk => {
+      const days = daysBetween(bk.startDate, bk.endDate);
+      const isFirstTime = bk.firstTime || false;
+      const amt = (days * 5) - (isFirstTime ? 5 : 0);
+      total += amt;
+      return `<div class="earn-row">
+        <div>
+          <div class="earn-name">${bk.name}${isFirstTime ? '<span class="first-time-badge">🎉 1st time</span>' : ''}</div>
+          <div class="earn-dates">${formatDate(bk.startDate)} – ${formatDate(bk.endDate)} · ${days} days${isFirstTime ? ' · –$5 discount' : ''}</div>
+        </div>
+        <div class="earn-amt">$${amt}</div>
+      </div>`;
+    }).join('');
+    document.getElementById('total-earned').textContent = '$' + total;
+    document.getElementById('earnings-list').innerHTML = rows || '<div class="empty"><span class="empty-icon">💸</span>No earnings yet!<br>Keep it up — you\'ve got this! 💪</div>';
+  }
+
+  function showTab(name) {
+    document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(t=>t.classList.remove('active'));
+    document.getElementById('tab-'+name).classList.add('active');
+    document.querySelectorAll('.tab-btn')[{jobs:0,packages:1,earnings:2}[name]].classList.add('active');
+  }
+
+  if (sessionStorage.getItem('gg_admin')) renderAll();
+</script>
+</body>
+</html>

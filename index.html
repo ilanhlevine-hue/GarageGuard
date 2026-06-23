@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Garage Guard">
+  <meta name="theme-color" content="#FFD43B">
+  <title>Garage Guard 📦</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+
+    :root {
+      --yellow: #FFD43B;
+      --yellow-dark: #F59F00;
+      --blue: #228BE6;
+      --blue-light: #E7F5FF;
+      --green: #40C057;
+      --green-light: #EBFBEE;
+      --red: #FA5252;
+      --purple: #845EF7;
+      --orange: #FD7E14;
+      --bg: #FFFBF0;
+      --white: #FFFFFF;
+      --text: #1A1A1A;
+      --muted: #666;
+      --border: #E9ECEF;
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    /* ---- HEADER ---- */
+    .header {
+      background: var(--yellow);
+      text-align: center;
+      padding: 24px 16px 20px;
+      border-bottom: 4px solid var(--yellow-dark);
+      position: relative;
+      overflow: hidden;
+    }
+    .header-pkgs {
+      font-size: 22px;
+      letter-spacing: 4px;
+      margin-bottom: 8px;
+      animation: drift 8s linear infinite;
+      display: block;
+      white-space: nowrap;
+    }
+    @keyframes drift {
+      0% { transform: translateX(5%); }
+      50% { transform: translateX(-5%); }
+      100% { transform: translateX(5%); }
+    }
+    .header-title {
+      font-size: 42px;
+      font-weight: 900;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .header-sub {
+      font-size: 15px;
+      font-weight: 700;
+      color: #555;
+    }
+
+    /* ---- HERO ---- */
+    .hero {
+      background: var(--blue);
+      color: white;
+      text-align: center;
+      padding: 32px 20px;
+    }
+    .hero-emoji { font-size: 64px; margin-bottom: 12px; display: block; }
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      font-size: 16px;
+      font-weight: 600;
+      opacity: 0.9;
+      line-height: 1.6;
+      max-width: 340px;
+      margin: 0 auto 20px;
+    }
+    .hero-price {
+      display: inline-block;
+      background: var(--yellow);
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 900;
+      padding: 10px 22px;
+      border-radius: 50px;
+      border: 3px solid var(--yellow-dark);
+    }
+
+    /* ---- PROMO BANNER ---- */
+    .promo {
+      background: var(--green);
+      color: white;
+      text-align: center;
+      padding: 20px 16px;
+      border-top: 4px solid #2F9E44;
+      border-bottom: 4px solid #2F9E44;
+    }
+    .promo-big {
+      font-size: 28px;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+    .promo-small {
+      font-size: 14px;
+      font-weight: 700;
+      opacity: 0.9;
+    }
+    .promo-tag {
+      display: inline-block;
+      background: white;
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 800;
+      padding: 5px 14px;
+      border-radius: 30px;
+      margin-top: 10px;
+    }
+
+    /* ---- HOW IT WORKS ---- */
+    .how {
+      padding: 32px 20px;
+      background: var(--white);
+      border-bottom: 3px dashed var(--border);
+    }
+    .section-title {
+      font-size: 24px;
+      font-weight: 900;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .steps { display: flex; flex-direction: column; gap: 16px; }
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--bg);
+      border-radius: var(--radius);
+      padding: 16px;
+      border: 2px solid var(--border);
+    }
+    .step-num {
+      width: 40px; height: 40px;
+      background: var(--yellow);
+      border: 3px solid var(--yellow-dark);
+      border-radius: 50%;
+      font-size: 18px;
+      font-weight: 900;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-title { font-size: 16px; font-weight: 800; margin-bottom: 3px; }
+    .step-desc { font-size: 14px; font-weight: 600; color: var(--muted); line-height: 1.5; }
+
+    /* ---- OPTIONS SECTION ---- */
+    .options-section {
+      padding: 28px 20px;
+      background: var(--blue-light);
+      border-bottom: 3px dashed #A5D8FF;
+    }
+
+    /* ---- BOOKING FORM ---- */
+    .book-section { padding: 28px 20px 40px; }
+    .book-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      border: 3px solid var(--yellow-dark);
+      padding: 24px 18px;
+      box-shadow: 4px 4px 0 var(--yellow-dark);
+    }
+    .field { margin-bottom: 18px; }
+    .field label {
+      display: block;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2.5px solid var(--border);
+      border-radius: 12px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      background: var(--bg);
+      outline: none;
+      -webkit-appearance: none;
+      transition: border-color 0.15s;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      border-color: var(--blue);
+    }
+    .field textarea { height: 80px; resize: none; }
+    .date-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    /* OPTION PICK CARDS */
+    .pick-label {
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .pick-cards { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
+    .pick-card {
+      border: 3px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--bg);
+      transition: all 0.15s;
+      font-family: 'Nunito', sans-serif;
+      text-align: left;
+      width: 100%;
+    }
+    .pick-card:active { transform: scale(0.98); }
+    .pick-card.selected {
+      border-color: var(--blue);
+      background: var(--blue-light);
+    }
+    .pick-card-icon { font-size: 28px; flex-shrink: 0; }
+    .pick-card-title { font-size: 15px; font-weight: 800; color: var(--text); }
+    .pick-card-desc { font-size: 13px; font-weight: 600; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+
+    .sub-section {
+      background: var(--bg);
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+
+    /* FIRST TIME NOTE */
+    .first-time-note {
+      background: var(--green-light);
+      border: 2.5px solid #2F9E44;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #2F9E44;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    /* SUBMIT BTN */
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--blue);
+      color: white;
+      border: 3px solid #1971C2;
+      border-radius: var(--radius);
+      font-family: 'Nunito', sans-serif;
+      font-size: 18px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 3px 3px 0 #1971C2;
+      transition: all 0.1s;
+    }
+    .submit-btn:active {
+      box-shadow: none;
+      transform: translate(3px, 3px);
+    }
+
+    /* SUCCESS */
+    .success-screen {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .success-emoji { font-size: 72px; display: block; margin-bottom: 16px; }
+    .success-screen h2 { font-size: 28px; font-weight: 900; margin-bottom: 10px; }
+    .success-screen p { font-size: 15px; font-weight: 600; color: var(--muted); line-height: 1.6; }
+
+    /* ABOUT */
+    .about-section {
+      padding: 28px 20px;
+      background: var(--blue-light);
+      border-top: 3px dashed #A5D8FF;
+      border-bottom: 3px dashed #A5D8FF;
+    }
+    .about-card {
+      background: white;
+      border: 3px solid var(--blue);
+      border-radius: var(--radius);
+      box-shadow: 4px 4px 0 var(--blue);
+      padding: 24px 18px;
+      text-align: center;
+    }
+    .about-emoji { font-size: 52px; margin-bottom: 10px; display: block; }
+    .about-name {
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .about-tagline {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--blue);
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .about-divider {
+      width: 48px; height: 4px;
+      background: var(--yellow);
+      border-radius: 4px;
+      margin: 0 auto 16px;
+    }
+    .about-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.7;
+      text-align: left;
+      margin-bottom: 12px;
+    }
+    .about-facts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 16px;
+    }
+    .about-fact {
+      background: var(--yellow);
+      border: 2px solid var(--yellow-dark);
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 800;
+      padding: 6px 14px;
+    }
+
+    /* REVIEWS */
+    .reviews { padding: 28px 20px; background: var(--white); border-top: 3px dashed var(--border); }
+    .review-card {
+      background: var(--bg);
+      border: 2.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 16px;
+      margin-bottom: 14px;
+    }
+    .review-stars { font-size: 20px; margin-bottom: 8px; }
+    .review-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.6;
+      font-style: italic;
+      margin-bottom: 12px;
+    }
+    .review-name { font-size: 14px; font-weight: 800; }
+    .review-community { font-size: 12px; font-weight: 600; color: var(--muted); }
+
+    /* FOOTER */
+    footer {
+      background: var(--yellow);
+      border-top: 4px solid var(--yellow-dark);
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #555;
+    }
+
+    /* INSTALL BANNER */
+    .install-banner {
+      display: none;
+      position: fixed;
+      bottom: 16px; left: 12px; right: 12px;
+      background: var(--text);
+      color: white;
+      border-radius: var(--radius);
+      padding: 14px 40px 14px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.5;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      z-index: 100;
+    }
+    .close-banner {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none; color: white;
+      font-size: 18px; cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <span class="header-pkgs">📦 📫 📦 📫 📦 📫 📦 📫 📦 📫 📦 📫 📦</span>
+  <div class="header-title">🏠 Garage Guard</div>
+  <div class="header-sub">Your neighborhood package minders!</div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-emoji">📦🔒✅</span>
+  <h1>Going on vacation?<br>We've got your packages!</h1>
+  <p>We'll collect every package that arrives at your home and keep it totally safe while you're away!</p>
+  <div class="hero-price">Only $5 per day!</div>
+</div>
+
+<!-- PROMO -->
+<div class="promo">
+  <div class="promo-big">🎉 New customers get their FIRST DAY FREE!</div>
+  <div class="promo-small">No catch — just our way of saying welcome to the neighborhood 👋</div>
+  <div class="promo-tag">Save $5 on your first booking!</div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="how">
+  <div class="section-title">⬇️ Here's how it works!</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div>
+        <div class="step-title">📋 Fill out the form below</div>
+        <div class="step-desc">Tell us your dates, address, and how you'd like your packages stored. Easy peasy!</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div>
+        <div class="step-title">✅ We confirm your booking</div>
+        <div class="step-desc">We'll text you within a few hours to say you're all set!</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div>
+        <div class="step-title">📸 We collect your packages</div>
+        <div class="step-desc">Every time a package arrives we grab it AND send you a photo so you can see it's safe!</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div>
+        <div class="step-title">🏠 Get everything when you're back!</div>
+        <div class="step-desc">We return your packages and you pay us then — cash or Venmo works!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STORAGE OPTIONS INFO -->
+<div class="options-section">
+  <div class="section-title">📦 Two ways we can help!</div>
+  <div class="steps">
+    <div class="step">
+      <div style="font-size:36px;">🏠</div>
+      <div>
+        <div class="step-title">Store in YOUR garage</div>
+        <div class="step-desc">We come to your house, pick up packages from outside, and put them safely inside your own garage. You either open it remotely for us each evening, or give us your keypad code!</div>
+      </div>
+    </div>
+    <div class="step">
+      <div style="font-size:36px;">📦</div>
+      <div>
+        <div class="step-title">We hold them for you</div>
+        <div class="step-desc">We collect your packages and keep them safe in OUR garage. When you get home, we deliver everything right to your door!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOOKING FORM -->
+<div class="book-section">
+  <div class="section-title">✏️ Book us now!</div>
+
+  <div class="book-card" id="booking-form-card">
+
+    <div class="field">
+      <label>👤 Your name</label>
+      <input type="text" id="name" placeholder="e.g. The Johnson Family" autocomplete="name">
+    </div>
+
+    <div class="field">
+      <label>📍 Your street address</label>
+      <input type="text" id="address" placeholder="e.g. 14 Oak Street" autocomplete="street-address">
+    </div>
+
+    <div class="field">
+      <label>🏘️ Your community</label>
+      <select id="community">
+        <option value="">— Pick your community —</option>
+        <option value="Lotus Palm">Lotus Palm</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>📞 Your phone number (so we can text you!)</label>
+      <input type="tel" id="phone" placeholder="e.g. 555-0142" autocomplete="tel">
+    </div>
+
+    <div class="date-row">
+      <div class="field">
+        <label>✈️ Leaving on</label>
+        <input type="date" id="start-date">
+      </div>
+      <div class="field">
+        <label>🏠 Back on</label>
+        <input type="date" id="end-date">
+      </div>
+    </div>
+
+    <!-- STORAGE OPTION -->
+    <span class="pick-label">📦 Where should we store your packages?</span>
+    <div class="pick-cards">
+      <button class="pick-card" id="opt-garage" onclick="selectStorage('garage')">
+        <span class="pick-card-icon">🏠</span>
+        <div>
+          <div class="pick-card-title">Store in MY garage</div>
+          <div class="pick-card-desc">We put packages in your own garage — you give us access!</div>
+        </div>
+      </button>
+      <button class="pick-card" id="opt-ourgarage" onclick="selectStorage('ourgarage')">
+        <span class="pick-card-icon">📦</span>
+        <div>
+          <div class="pick-card-title">Hold them in Garage Guard's garage</div>
+          <div class="pick-card-desc">We store everything at our house and bring it all to you when you're back!</div>
+        </div>
+      </button>
+    </div>
+
+    <!-- GARAGE ACCESS OPTIONS -->
+    <div id="garage-access-fields" style="display:none;">
+      <div class="sub-section">
+        <span class="pick-label">🔐 How do we get into your garage?</span>
+        <div class="pick-cards">
+          <button class="pick-card" id="opt-remote" onclick="selectAccess('remote')">
+            <span class="pick-card-icon">📱</span>
+            <div>
+              <div class="pick-card-title">I'll open it remotely</div>
+              <div class="pick-card-desc">You open the garage for us from wherever you are each evening!</div>
+            </div>
+          </button>
+          <button class="pick-card" id="opt-code" onclick="selectAccess('code')">
+            <span class="pick-card-icon">🔢</span>
+            <div>
+              <div class="pick-card-title">Give us the keypad code</div>
+              <div class="pick-card-desc">We use your garage door keypad code to put packages inside.</div>
+            </div>
+          </button>
+        </div>
+
+        <div id="remote-fields" style="display:none;">
+          <div class="field">
+            <label>🕐 What time should we come each evening?</label>
+            <input type="time" id="remote-time">
+          </div>
+          <div class="field">
+            <label>📞 Best number to call/text when we arrive</label>
+            <input type="tel" id="remote-contact" placeholder="e.g. 555-0142">
+          </div>
+        </div>
+
+        <div id="code-fields" style="display:none;">
+          <div class="field">
+            <label>🔢 Your garage keypad code</label>
+            <input type="text" id="garage-code" placeholder="e.g. 4821" maxlength="10" inputmode="numeric">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>📝 Anything else we should know?</label>
+      <textarea id="notes" placeholder="e.g. expecting a big Amazon box, side gate code, etc..."></textarea>
+    </div>
+
+    <div class="first-time-note">🎉 <strong>First time booking with us?</strong> Your first day is totally FREE — we'll take that off when we confirm!</div>
+
+    <button class="submit-btn" onclick="submitBooking()">📬 Send my booking request!</button>
+  </div>
+
+  <div class="success-screen" id="success-screen">
+    <span class="success-emoji">🎉</span>
+    <h2>Booking sent! Woohoo!</h2>
+    <p>We'll text you to confirm within a few hours. Get ready for a worry-free vacation — your packages are in good hands! 📦✅</p>
+  </div>
+</div>
+
+<!-- ABOUT ILAN -->
+<div class="about-section">
+  <div class="section-title">👋 Meet the founder!</div>
+  <div class="about-card">
+    <div class="about-emoji">⚾🧢</div>
+    <div class="about-name">Ilan Levine</div>
+    <div class="about-tagline">5th Grader · Entrepreneur · Baseball Player</div>
+    <div class="about-divider"></div>
+    <p class="about-text">
+      Hi! I'm Ilan, and I created Garage Guard! 👋 I'm a 5th grader at <strong>Sunrise Park</strong> and a proud resident of <strong>Lotus Palm</strong>. I play travel baseball for the <strong>West Boca Panthers</strong> ⚾ and I've always loved coming up with new ideas and ways to help people.
+    </p>
+    <p class="about-text">
+      I noticed that people in our neighborhood didn't have anyone to watch their packages when they went on vacation — so I decided to fix that! 💡 I built Garage Guard because I wanted to do something that actually helps our community AND learn what it's like to run a real business.
+    </p>
+    <p class="about-text">
+      I'm hoping this is something totally new for Lotus Palm — a service that didn't exist before, made by one of your own neighbors! I really hope you'll give it a try. 🙏
+    </p>
+    <div class="about-facts">
+      <div class="about-fact">🏫 Sunrise Park</div>
+      <div class="about-fact">🏘️ Lotus Palm</div>
+      <div class="about-fact">⚾ West Boca Panthers</div>
+    </div>
+  </div>
+</div>
+
+<!-- REVIEWS -->
+<div class="reviews">
+  <div class="section-title">⭐ What our neighbors say!</div>
+  <div class="review-card">
+    <div class="review-stars">⭐⭐⭐⭐⭐</div>
+    <div class="review-text">"We had 6 packages arrive while we were in Disney for a week. Every single one was safe when we got home. Will definitely use again!"</div>
+    <div class="review-name">The Johnson Family</div>
+    <div class="review-community">📍 Lotus Palm</div>
+  </div>
+  <div class="review-card">
+    <div class="review-stars">⭐⭐⭐⭐⭐</div>
+    <div class="review-text">"So reliable! Got a photo text every time a package was picked up. Such a smart idea for our neighborhood!"</div>
+    <div class="review-name">Maria R.</div>
+    <div class="review-community">📍 Lotus Palm</div>
+  </div>
+  <div class="review-card">
+    <div class="review-stars">⭐⭐⭐⭐⭐</div>
+    <div class="review-text">"I was so worried about leaving for two weeks but knowing my packages were safe gave me real peace of mind. Highly recommend!"</div>
+    <div class="review-name">The Davis Family</div>
+    <div class="review-community">📍 Lotus Palm</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  🏠 <strong>Garage Guard</strong> — Made with ❤️ by your neighbor!<br>
+  Questions? Just text us! 📱
+</footer>
+
+<div class="install-banner" id="install-banner">
+  <button class="close-banner" onclick="document.getElementById('install-banner').style.display='none'">✕</button>
+  <strong>📱 Add to your Home Screen!</strong><br>
+  Tap Share → "Add to Home Screen" for easy access!
+</div>
+
+<script>
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  if (isIOS && !window.navigator.standalone) {
+    setTimeout(() => document.getElementById('install-banner').style.display = 'block', 3000);
+  }
+
+  let selectedStorage = '';
+  let selectedAccess = '';
+
+  function selectStorage(type) {
+    selectedStorage = type;
+    document.querySelectorAll('#opt-garage,#opt-ourgarage').forEach(el => el.classList.remove('selected'));
+    document.getElementById(type === 'garage' ? 'opt-garage' : 'opt-ourgarage').classList.add('selected');
+    document.getElementById('garage-access-fields').style.display = type === 'garage' ? 'block' : 'none';
+    if (type !== 'garage') selectedAccess = '';
+  }
+
+  function selectAccess(type) {
+    selectedAccess = type;
+    document.querySelectorAll('#opt-remote,#opt-code').forEach(el => el.classList.remove('selected'));
+    document.getElementById('opt-' + type).classList.add('selected');
+    document.getElementById('remote-fields').style.display = type === 'remote' ? 'block' : 'none';
+    document.getElementById('code-fields').style.display = type === 'code' ? 'block' : 'none';
+  }
+
+  function submitBooking() {
+    const name = document.getElementById('name').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const community = document.getElementById('community').value;
+    const phone = document.getElementById('phone').value.trim();
+    const start = document.getElementById('start-date').value;
+    const end = document.getElementById('end-date').value;
+
+    if (!name || !address || !community || !phone || !start || !end) {
+      alert('Oops! Please fill in all the fields! 😊');
+      return;
+    }
+    if (!selectedStorage) {
+      alert('Please choose where to store your packages! 📦');
+      return;
+    }
+    if (selectedStorage === 'garage' && !selectedAccess) {
+      alert('Please choose how we\'ll get into your garage! 🔐');
+      return;
+    }
+    if (selectedStorage === 'garage' && selectedAccess === 'remote' && !document.getElementById('remote-time').value) {
+      alert('Please tell us what time to come each evening! 🕐');
+      return;
+    }
+    if (selectedStorage === 'garage' && selectedAccess === 'code' && !document.getElementById('garage-code').value.trim()) {
+      alert('Please enter your garage keypad code! 🔢');
+      return;
+    }
+    if (new Date(end) <= new Date(start)) {
+      alert('Your return date needs to be after your leave date! 📅');
+      return;
+    }
+
+    const bookings = JSON.parse(localStorage.getItem('gg_bookings') || '[]');
+    bookings.push({
+      id: Date.now(),
+      name, address, community, phone,
+      startDate: start, endDate: end,
+      storageType: selectedStorage,
+      accessType: selectedStorage === 'garage' ? selectedAccess : null,
+      remoteTime: selectedAccess === 'remote' ? document.getElementById('remote-time').value : null,
+      remoteContact: selectedAccess === 'remote' ? document.getElementById('remote-contact').value.trim() : null,
+      garageCode: selectedAccess === 'code' ? document.getElementById('garage-code').value.trim() : null,
+      notes: document.getElementById('notes').value.trim(),
+      status: 'pending',
+      submittedAt: new Date().toISOString(),
+      packages: []
+    });
+    localStorage.setItem('gg_bookings', JSON.stringify(bookings));
+    document.getElementById('booking-form-card').style.display = 'none';
+    document.getElementById('success-screen').style.display = 'block';
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
